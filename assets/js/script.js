@@ -7,6 +7,10 @@ var windOutPut = document.getElementById("wind");
 
 const apiKey = "bcc9d715a88df781d66d51a02062e0d2";
 
+function convertToCel(value){
+    return (value-273).toFixed(2);
+}
+
 async function GetWeather() {
   var weatherResult = await (
     await fetch(
@@ -14,7 +18,7 @@ async function GetWeather() {
     )
   ).json();
 
-  console.log(weatherResult);
+  setInfo(weatherResult)
 }
 
 function setInfo(data) {
@@ -22,6 +26,11 @@ function setInfo(data) {
   var description = data["weather"][0]["description"];
   var temp = data["main"]["temp"];
   var wind = data["wind"]["speed"];
+
+  cityOutPut.innerHTML= `City : ${cityName}`;
+  descOutPut.innerHTML= `Description : ${description}`;
+  tempOutPut.innerHTML= `Temperature : ${convertToCel(temp)}`;
+  windOutPut.innerHTML= `Wind Speed : ${wind}`; 
 }
 
 addInput.addEventListener("click", GetWeather);
