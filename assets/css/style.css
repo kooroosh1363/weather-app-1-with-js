@@ -25,3 +25,84 @@
     text-align: center;
     padding: 5rem;
 }
+.header h1 {
+    font-weight: 500;
+    font-size: 34px;
+    font-family: 'Geologica', sans-ser;
+    color: #e4eff7;
+}
+
+
+a:hover, a:visited, a:link, a:active{
+    text-decoration: none;
+    color: #d0e5f5;
+}
+.main {
+    /* background-image: linear-gradient(#424242, #757575); */
+    background-color: #504b4b;
+    
+    
+}
+
+/*input section */
+.inputs {
+    padding: 6rem 0 2rem 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+}
+
+.inputs input[type="text"] {
+    height: 3.5rem;
+    width: 30rem;
+    background: #d4cece;
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: 'Geologica', sans-ser;
+    border: none;
+    background-color: transparent;
+    border-bottom: solid 1px #16a864;
+    color: #16a864;
+    border-radius: 2px;
+    margin-left:27px ;
+    outline: none;
+    
+}
+.inputs input[type="submit"] {
+    height: 3.5rem;
+    width: 6.5rem;
+    background: #16a864;
+    font-weight: bold;
+    font-family: 'Geologica', sans-ser;
+    color: ghostwhite;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 2px;
+    
+}
+
+/* display */
+.display {
+    text-align: center;
+    color: #16a864;
+}
+.wrapper {
+    margin: 0 9rem;
+    width: 50%;
+    background-color: #212121;
+    height: 40vh;
+    margin: 50px auto;
+    border-radius: 2px;
+}
+
+.wrapper h2{
+    padding: 5px 0;
+    text-align: center;
+  }
+  .wrapper p{
+    font-family: 'Geologica', sans-ser;
+    text-align: center;
+    margin:10px 0;
+    font-size:20px;
+  }
