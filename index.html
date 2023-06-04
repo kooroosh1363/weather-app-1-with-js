@@ -15,3 +15,38 @@
         href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800&family=Noto+Sans:ital,wght@1,900&family=Oswald:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Roboto:ital,wght@1,900&display=swap"
         rel="stylesheet">
 </head>
+<body>
+    <div class="container-fluid">
+        <div class="row offset-sm-1">
+            <!-- Header part -->
+            <section class="header col-md-4 col-sm-10 ">
+                <h1>Javascript Weather App</h1>
+            </section>
+
+            <section class="main col-md-7 col-sm-10  ">
+                <!-- input section -->
+                <section class="inputs">
+                    <input type="submit" value="Submit" id="add">
+                    <input type="text" dir="rtl" placeholder="Please Enter a City ..." id="cityInput">
+
+                </section>
+
+                <!-- Display section -->
+                <section class="display">
+                    <div class="wrapper">
+                        <h2 id="cityoutput"></h2>
+                        <p id="description"></p>
+                        <p id="temp"></p>
+                        <p id="wind"></p>
+                    </div>
+                </section>
+
+            </section>
+        </div>
+    </div>
+
+
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
