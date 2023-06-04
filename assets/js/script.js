@@ -7,16 +7,21 @@ var windOutPut = document.getElementById("wind");
 
 const apiKey = "bcc9d715a88df781d66d51a02062e0d2";
 
+async function GetWeather() {
+  var weatherResult = await (
+    await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&appid=${apiKey}`
+    )
+  ).json();
 
-async function GetWeather(){
-    var weatherResult = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&appid=${apiKey}`)).json();
-
-    
-    console.log(weatherResult);
-
+  console.log(weatherResult);
 }
 
+function setInfo(data) {
+  var cityName = data["name"];
+  var description = data["weather"][0]["description"];
+  var temp = data["main"]["temp"];
+  var wind = data["wind"]["speed"];
+}
 
-
-
-addInput.addEventListener('click', GetWeather);
+addInput.addEventListener("click", GetWeather);
