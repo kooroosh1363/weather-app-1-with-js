@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Geologica', sans-ser
+}
+
+/*background */
+.container-fluid,body{
+    background-size: cover;
+    height:auto;
+}
+
+.row{
+    padding-top: 5.5rem;
+    padding-bottom: 5rem;
+    
+}
+/*header */
+.header {
+    background: #16a864;
+    background-size: cover;
+    background-position: relative;
+    color: rgb(12, 11, 6);
+    text-align: center;
+    padding: 5rem;
+}
