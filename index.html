@@ -1,52 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather-App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800&family=Noto+Sans:ital,wght@1,900&family=Oswald:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Roboto:ital,wght@1,900&display=swap"
-        rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cirrus is a keyless weather dashboard powered by Open-Meteo with city search, current conditions, and a five-day forecast.">
+  <meta name="theme-color" content="#e8eef2">
+  <meta name="color-scheme" content="light dark">
+  <title>Cirrus — Weather Dashboard</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script type="module" src="./assets/js/script.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row offset-sm-1">
-            <!-- Header part -->
-            <section class="header col-md-4 col-sm-10 ">
-                <h1>Javascript Weather App</h1>
-            </section>
+  <a class="skip-link" href="#weather-search">Skip to weather search</a>
 
-            <section class="main col-md-7 col-sm-10  ">
-                <!-- input section -->
-                <section class="inputs">
-                    <input type="submit" value="Submit" id="add">
-                    <input type="text" dir="rtl" placeholder="Please Enter a City ..." id="cityInput">
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Cirrus weather home">
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span>Cirrus</span>
+    </a>
+    <span class="provider-note">Data by Open-Meteo</span>
+  </header>
 
-                </section>
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">Keyless weather / browser-native</p>
+      <h1 id="page-title">Weather, without shipping a secret.</h1>
+      <p class="hero-copy">
+        Search any city for current conditions and a five-day outlook.
+        No client-side API key, framework, tracking script, or paid service is required.
+      </p>
 
-                <!-- Display section -->
-                <section class="display">
-                    <div class="wrapper">
-                        <h2 id="cityoutput"></h2>
-                        <p id="description"></p>
-                        <p id="temperature"></p>
-                        <p id="wind"></p>
-                    </div>
-                </section>
-
-            </section>
+      <form id="weather-search" class="search-form" novalidate>
+        <label for="city-input">City</label>
+        <div class="search-row">
+          <input
+            id="city-input"
+            name="city"
+            type="search"
+            autocomplete="off"
+            enterkeyhint="search"
+            maxlength="100"
+            placeholder="Try Tbilisi, Vancouver, Tokyo…"
+            required
+            aria-describedby="search-help search-error"
+          >
+          <button id="search-button" type="submit">Search <span aria-hidden="true">→</span></button>
         </div>
-    </div>
+        <div class="search-meta">
+          <p id="search-help">City names are resolved with Open-Meteo geocoding.</p>
+          <p id="search-error" class="search-error" role="alert"></p>
+        </div>
+      </form>
 
+      <div class="recent-block">
+        <p class="recent-label">Recent searches</p>
+        <div id="recent-searches" class="recent-list" aria-label="Recent weather searches">
+          <span class="recent-empty">No recent searches yet.</span>
+        </div>
+      </div>
+    </section>
 
-    <script src="./assets/js/script.js"></script>
+    <section id="weather-panel" class="weather-panel" aria-live="polite" aria-busy="false">
+      <div id="initial-state" class="state-card">
+        <span class="state-symbol" aria-hidden="true">↗</span>
+        <div>
+          <h2>Search for a city</h2>
+          <p>The dashboard will show current temperature, feels-like, humidity, wind, and a five-day forecast.</p>
+        </div>
+      </div>
+
+      <div id="loading-state" class="state-card" hidden>
+        <span class="loader" aria-hidden="true"></span>
+        <div>
+          <h2>Loading weather</h2>
+          <p>Resolving the city and requesting forecast data…</p>
+        </div>
+      </div>
+
+      <div id="error-state" class="state-card state-card--error" hidden>
+        <span class="state-symbol" aria-hidden="true">!</span>
+        <div>
+          <h2>Weather unavailable</h2>
+          <p id="error-message">Try another city or check your connection.</p>
+        </div>
+      </div>
+
+      <div id="weather-content" hidden>
+        <section class="current-card" aria-labelledby="location-name">
+          <div class="current-heading">
+            <div>
+              <p class="section-index">Current / now</p>
+              <h2 id="location-name"></h2>
+              <p id="condition-label" class="condition-label"></p>
+            </div>
+            <div id="condition-icon" class="condition-icon" aria-hidden="true"></div>
+          </div>
+
+          <div class="temperature-row">
+            <p id="current-temperature" class="temperature"></p>
+            <p id="current-time" class="current-time"></p>
+          </div>
+
+          <dl class="current-metrics">
+            <div>
+              <dt>Feels like</dt>
+              <dd id="feels-like"></dd>
+            </div>
+            <div>
+              <dt>Humidity</dt>
+              <dd id="humidity"></dd>
+            </div>
+            <div>
+              <dt>Wind</dt>
+              <dd id="wind-speed"></dd>
+            </div>
+            <div>
+              <dt>Timezone</dt>
+              <dd id="timezone"></dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="forecast-section" aria-labelledby="forecast-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-index">Forecast / 5 days</p>
+              <h2 id="forecast-title">What comes next</h2>
+            </div>
+            <p>Daily high, low, conditions, and peak precipitation probability.</p>
+          </div>
+          <div id="forecast-grid" class="forecast-grid"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Cirrus / keyless weather dashboard</p>
+    <p>Weather and geocoding data: Open-Meteo</p>
+  </footer>
 </body>
-
 </html>
